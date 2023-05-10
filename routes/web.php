@@ -5,6 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LendingController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\AdminBookController;
+use App\Http\Controllers\AdminUserController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,5 +47,10 @@ Route::get('/reservations', [ReservationController::class, 'index'])->name('rese
 Route::get('/reservations/{reservationId}', [ReservationController::class, 'show'])->name('reservations.show');
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
 Route::delete('/reservations/{reservationId}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+
+Route::get('/admin/books/create', [AdminBookController::class, 'create'])->name('admin.books.create');
+Route::post('/admin/books', [AdminBookController::class, 'store'])->name('admin.books.store');
+Route::get('/admin/books', [AdminBookController::class, 'index'])->name('admin.books.index');
+Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
 
 require __DIR__.'/auth.php';
