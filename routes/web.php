@@ -48,9 +48,4 @@ Route::get('/reservations/{reservationId}', [ReservationController::class, 'show
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
 Route::delete('/reservations/{reservationId}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 
-Route::get('/admin/books/create', [AdminBookController::class, 'create'])->name('admin.books.create');
-Route::post('/admin/books', [AdminBookController::class, 'store'])->name('admin.books.store');
-Route::get('/admin/books', [AdminBookController::class, 'index'])->name('admin.books.index');
-Route::get('/admin/users', [AdminUserController::class, 'index'])->name('admin.users.index');
-
 require __DIR__.'/auth.php';
