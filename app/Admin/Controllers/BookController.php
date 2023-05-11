@@ -3,6 +3,7 @@
 namespace App\Admin\Controllers;
 
 use App\Models\Book;
+use App\Models\Tag;
 use Encore\Admin\Controllers\AdminController;
 use Encore\Admin\Form;
 use Encore\Admin\Grid;
@@ -31,8 +32,15 @@ class BookController extends AdminController
         $grid->column('image_path', __('Image path'))->image();
         $grid->column('created_at', __('Created at'));
         $grid->column('updated_at', __('Updated at'));
-        $grid->column('deleted_at', __('Deleted at'));
 
+        $grid->tags()->display(function ($tags) {
+
+            $tags = array_map(function ($tag) {
+                return "<span class='label label-success'>{$tag['name']}</span>";
+            }, $tags);
+
+            return join('&nbsp;', $tags);
+        });
         return $grid;
     }
 
@@ -51,7 +59,19 @@ class BookController extends AdminController
         $show->field('image_path', __('Image path'))->image();
         $show->field('created_at', __('Created at'));
         $show->field('updated_at', __('Updated at'));
-        $show->field('deleted_at', __('Deleted at'));
+
+        $show->tags('Tags', function ($tags){
+            $tags->resource('/admin/tags');
+
+            $tags->id();
+            $tags->name();
+            $tags->created_at();
+            $tags->updated_at();
+
+            $tags->filter(function ($filter) {
+                $filter->like('name');
+            });
+        });
 
         return $show;
     }
@@ -67,6 +87,7 @@ class BookController extends AdminController
 
         $form->text('title', __('Title'));
         $form->image('image_path', __('Image path'));
+        $form->multipleSelect('tags','Tag')->options(Tag::all()->pluck('name','id'));
 
         return $form;
     }
