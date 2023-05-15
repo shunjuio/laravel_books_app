@@ -10,6 +10,14 @@ class Lending extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable  = [
+        'user_id',
+        'book_id',
+        'start_at',
+        'end_at',
+        'is_returned',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

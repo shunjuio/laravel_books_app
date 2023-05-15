@@ -18,6 +18,16 @@ class Book extends Model
 
     protected $table = 'books';
 
+    public function lendings()
+    {
+        return $this->hasMany(Lending::class);
+    }
+
+    public function nowLending()
+    {
+        return $this->hasOne(Lending::class)->where('is_returned', '=', 0);
+    }
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'tag_book', 'book_id', 'tag_id');
