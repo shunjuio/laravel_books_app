@@ -18,6 +18,13 @@ class ReservationController extends Controller
         return view('reservations.index', compact('user', 'reservations'));
     }
 
+    public function show(Request $request, $reservationId)
+    {
+        $reservation = Reservation::with('book')->where('id', $reservationId)->first();
+//        dd($reservation);
+        return view('reservations.show', compact('reservation'));
+    }
+
     public function store(Request $request)
     {
       $user = Auth::user();
