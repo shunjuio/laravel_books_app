@@ -25,7 +25,7 @@ class LendingBookMiddleware
         //自分が貸出中なら貸出詳細へリダイレクト
         if ($lending)
         {
-            return redirect()->route('books.index');
+            return redirect()->route('lendings.show', ['lendingId'=>$lending->id]);
         }
         return $next($request);
     }

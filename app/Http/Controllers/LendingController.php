@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Lending;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class LendingController extends Controller
 {
@@ -25,5 +26,17 @@ class LendingController extends Controller
         ]);
 
         return redirect()->route('books.show', ['bookId'=> $bookId]);
+    }
+
+    public function show(int $lendingId)
+    {
+        $user = Auth::user();
+
+        $lending = $user->lendings()
+            ->where('id', $lendingId)
+            ->first();
+        $lending->book->image_path = Storage::url($lending->book->image_path);
+
+        return view('lendings.show', compact('lending'));
     }
 }
