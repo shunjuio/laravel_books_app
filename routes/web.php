@@ -7,6 +7,7 @@ use App\Http\Controllers\LendingController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AdminBookController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Middleware\LendingBookMiddleware;
 
 
 /*
@@ -36,7 +37,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('/books', [BookController::class, 'index'])->name('books.index');
-Route::get('/books/{bookId}', [BookController::class, 'show'])->name('books.show');
+Route::get('/books/{bookId}', [BookController::class, 'show'])->middleware(LendingBookMiddleware::class)->name('books.show');
 
 Route::get('/lendings', [LendingController::class, 'index'])->name('lendings.index');
 Route::post('/lendings', [LendingController::class, 'store'])->name('lendings.store');
