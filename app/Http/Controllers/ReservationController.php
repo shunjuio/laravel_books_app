@@ -21,10 +21,10 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
       $user = Auth::user();
-      $bookId =  $request->get('book_id');
+      $bookId = $request->get('book_id');
 
       $user->reservations()->create([
-        'book_id' =>$bookId,
+        'book_id' => $bookId,
         'start_at' => $request->get('start_at'),
         'end_at' => $request->get('end_at')
       ]);

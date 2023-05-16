@@ -1,10 +1,9 @@
-@if($user)
-  <h3>{{$user->name}}</h3>
-@else
- <h3>名無し</h3>
-@endif
 <h2>Reservations/index</h2>
 <h1>予約している本一覧</h1>
+
+@if($reservations->isEmpty())
+    <h3>現在予約している本はありません</h3>
+@else
 <div>
     @foreach($reservations as $reservation)
       <div>
@@ -15,3 +14,4 @@
     @endforeach
 
 </div>
+@endif
