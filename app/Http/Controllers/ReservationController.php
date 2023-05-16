@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Book;
@@ -9,14 +10,12 @@ use PhpParser\Builder;
 
 class ReservationController extends Controller
 {
-    public function index(){
-      $user = Auth::user();
-      $books = Book::whereHas('reservations', function ($query) use ($user) {
-        $query->where('user_id', $user->id);
-      })->get();
+    public function index()
+    {
+        $user = Auth::user();
+        $reservations = Reservation::with('book')->where('user_id', $user->id)->get();
 
-
-        return view('reservations.index', compact('user', 'books'));
+        return view('reservations.index', compact('user', 'reservations'));
     }
 
     public function store(Request $request)

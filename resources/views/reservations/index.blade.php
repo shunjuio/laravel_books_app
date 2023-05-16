@@ -4,15 +4,14 @@
  <h3>名無し</h3>
 @endif
 <h2>Reservations/index</h2>
+<h1>予約している本一覧</h1>
 <div>
-  <ul style="list-style-type: none;">
-  @foreach($books as $book)
-      <li class="li" >
-        <img src="{{ 'storage/'. $book->image_path}}" style='max-width:300px;max-height:500px'>
-        <br>
-        <a href="{{ route('reservations.show', ['reservationId'=> $book->id] )}}"><span>{{ $book->title }}</span>
-      </li>
+    @foreach($reservations as $reservation)
+      <div>
+          <img src="{{ 'storage/'. $reservation->book->image_path}}" style='max-width:250px;max-height:400px'>
+          <p><a href="{{ route('reservations.show', ['reservationId'=> $reservation->id] )}}"><span>{{ $reservation->book->title }}</span></a></p>
+          <p>{{\Carbon\Carbon::parse($reservation->start_at)->format('Y年m月d日')}}から</p>
+      </div>
     @endforeach
-  </ul>
 
 </div>
