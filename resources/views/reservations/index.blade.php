@@ -12,6 +12,5 @@
           <p>{{\Carbon\Carbon::parse($reservation->start_at)->format('Y年m月d日')}}から</p>
       </div>
     @endforeach
-
 </div>
 @endif
