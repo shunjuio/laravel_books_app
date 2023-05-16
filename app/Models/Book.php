@@ -32,4 +32,9 @@ class Book extends Model
     {
         return $this->belongsToMany(Tag::class, 'tag_book', 'book_id', 'tag_id');
     }
+
+    public function reservations()
+    {
+      return $this->hasMany(Reservation::class);
+    }
 }

@@ -43,9 +43,10 @@ Route::post('/lendings', [LendingController::class, 'store'])->name('lendings.st
 Route::put('/lendings/{lendingId}/return', [LendingController::class, 'update'])->name('lendings.update');
 Route::get('/lendings/{lendingId}', [LendingController::class, 'show'])->name('lendings.show');
 
-Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
-Route::get('/reservations/{reservationId}', [ReservationController::class, 'show'])->name('reservations.show');
-Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
-Route::delete('/reservations/{reservationId}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
-
+Route::middleware('auth')->group(function () {
+    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+    Route::get('/reservations/{reservationId}', [ReservationController::class, 'show'])->name('reservations.show');
+    Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
+    Route::delete('/reservations/{reservationId}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+});
 require __DIR__.'/auth.php';
