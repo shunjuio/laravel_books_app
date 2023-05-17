@@ -12,6 +12,14 @@ class LendingController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+
+        $lendings = $user->nowLendings()
+            ->with('book')
+            ->get()
+            ->sortBy('end_at');
+
+        return view('lendings.index', compact('user', 'lendings'));
 
     }
 
