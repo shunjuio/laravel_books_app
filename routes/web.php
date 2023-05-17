@@ -34,14 +34,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/books', [BookController::class, 'index'])->name('books.index');
+    Route::get('/books/{bookId}', [BookController::class, 'show'])->middleware('lending_book')->name('books.show');
 
-Route::get('/books', [BookController::class, 'index'])->name('books.index');
-Route::get('/books/{bookId}', [BookController::class, 'show'])->name('books.show');
-
-Route::get('/lendings', [LendingController::class, 'index'])->name('lendings.index');
-Route::post('/lendings', [LendingController::class, 'store'])->name('lendings.store');
-Route::put('/lendings/{lendingId}/return', [LendingController::class, 'update'])->name('lendings.update');
-Route::get('/lendings/{lendingId}', [LendingController::class, 'show'])->name('lendings.show');
+    Route::get('/lendings', [LendingController::class, 'index'])->name('lendings.index');
+    Route::post('/lendings', [LendingController::class, 'store'])->name('lendings.store');
+    Route::put('/lendings/{lendingId}/return', [LendingController::class, 'update'])->name('lendings.update');
+    Route::get('/lendings/{lendingId}', [LendingController::class, 'show'])->name('lendings.show');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');

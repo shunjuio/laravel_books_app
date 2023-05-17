@@ -23,6 +23,10 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
 
+    protected $routeMiddleware = [
+        'lending_book' => \App\Http\Middleware\LendingBookMiddleware::class,
+    ];
+
     /**
      * The application's route middleware groups.
      *
