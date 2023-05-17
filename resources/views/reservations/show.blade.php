@@ -1,4 +1,4 @@
-<h2><a href="/reservations" style="text-decoration: none;">予約している本の一覧</a> > {{$reservation->book->title}}</h2>
+<h2><a href="/reservations" style="text-decoration: none;">予約している本一覧</a> > {{$reservation->book->title}}</h2>
 
 <div>
     <img src="{{ asset('storage/'. $reservation->book->image_path) }}" alt="book image"
