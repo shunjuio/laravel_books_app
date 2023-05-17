@@ -15,14 +15,15 @@ class ReservationController extends Controller
     public function index()
     {
         $user         = Auth::user();
-        $reservations = Reservation::with('book')->where('user_id', $user->id)->get();
+        $reservations = $user->reservations()->with('book')->where('user_id', $user->id)->get();
 
         return view('reservations.index', compact('user', 'reservations'));
     }
 
     public function show(Request $request, $reservationId)
     {
-        $reservation                     = Reservation::with('book')->where('id', $reservationId)->first();
+        $user = Auth::user();
+        $reservation = $user->reservations()->where('id', $reservationId)->with('book')->first();
         $reservation->display_image_path = Storage::url($reservation->book->image_path);
         $reservation->display_start_at   = Carbon::parse($reservation->start_at)->format('Y-m-d');
         $reservation->display_end_at     = Carbon::parse($reservation->end_at)->format('Y-m-d');
