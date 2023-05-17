@@ -8,4 +8,8 @@
     <input type="submit" value="返却する" >
 </form>
 
-    <p>{{\Carbon\Carbon::parse($lending->end_at)->format('Y年m月d日')}}　まで借りています</p>
+    @if($lending->end_at > $now)
+        <p>{{\Carbon\Carbon::parse($lending->end_at)->format('Y年m月d日')}}　まで借りています</p>
+    @else
+        <p>返却期限過ぎています！！</p>
+    @endif
