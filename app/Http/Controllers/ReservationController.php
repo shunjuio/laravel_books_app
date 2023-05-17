@@ -12,7 +12,7 @@ class ReservationController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user         = Auth::user();
         $reservations = Reservation::with('book')->where('user_id', $user->id)->get();
 
         return view('reservations.index', compact('user', 'reservations'));
@@ -21,22 +21,28 @@ class ReservationController extends Controller
     public function show(Request $request, $reservationId)
     {
         $reservation = Reservation::with('book')->where('id', $reservationId)->first();
-//        dd($reservation);
+
         return view('reservations.show', compact('reservation'));
     }
 
     public function store(Request $request)
     {
-      $user = Auth::user();
-      $bookId = $request->get('book_id');
+        $user   = Auth::user();
+        $bookId = $request->get('book_id');
+        $user->reservations()->create([
+            'book_id'  => $bookId,
+            'start_at' => $request->get('start_at'),
+            'end_at'   => $request->get('end_at')
+        ]);
 
-      $user->reservations()->create([
-        'book_id' => $bookId,
-        'start_at' => $request->get('start_at'),
-        'end_at' => $request->get('end_at')
-      ]);
+        return redirect()->route('reservations.index');
+    }
 
-      return redirect()->route('reservations.index');
+    public function destroy(Request $request, $reservationId)
+    {
+        Reservation::destroy($reservationId);
+
+        return redirect()->route('reservations.index');
     }
 
 }

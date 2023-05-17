@@ -1,11 +1,15 @@
 <h2><a href="/reservations" style="text-decoration: none;">予約している本の一覧</a> > {{$reservation->book->title}}</h2>
 
 <div>
-    <img src="{{ asset('storage/'. $reservation->book->image_path) }}" alt="book image" style='max-width:250px;max-height:400px'>
+    <img src="{{ asset('storage/'. $reservation->book->image_path) }}" alt="book image"
+         style='max-width:250px;max-height:400px'>
     <div>
         <h2>{{$reservation->book->title}}</h2>
         <p>予約しています</p>
-        <form action="#" method="">
+        <form action="{{ route('reservations.destroy', ['reservationId' => $reservation->id]) }}" method="POST">
+            @csrf
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="submit" value="予約を取り消す">
         </form>
     </div>

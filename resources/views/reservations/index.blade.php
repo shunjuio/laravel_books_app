@@ -1,5 +1,4 @@
-<h2>Reservations/index</h2>
-<h1>予約している本一覧</h1>
+<h2>予約している本一覧</h2>
 
 @if($reservations->isEmpty())
     <h3>現在予約している本はありません</h3>
