@@ -2,9 +2,14 @@
 <img src="{{ asset($lending->book->image_path)}}" style='max-width:500px;max-height:500px'>
 <br>
 
-<form action="" method="PUT">
+<form action="{{route('lendings.update', ['lendingId' =>$lending->id])}}" method="POST">
     @csrf
+    @method('PUT')
     <input type="submit" value="返却する" >
 </form>
 
-    <p>{{\Carbon\Carbon::parse($lending->end_at)->format('Y年m月d日')}}　まで借りています</p>
+    @if($lending->end_at > $now)
+        <p>{{\Carbon\Carbon::parse($lending->end_at)->format('Y年m月d日')}}　まで借りています</p>
+    @else
+        <p>返却期限過ぎています！！</p>
+    @endif

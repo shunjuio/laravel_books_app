@@ -6,11 +6,20 @@ use App\Models\Lending;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class LendingController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
+
+        $lendings = $user->nowLendings()
+            ->with('book')
+            ->get()
+            ->sortBy('end_at');
+
+        return view('lendings.index', compact('user', 'lendings'));
 
     }
 
@@ -30,13 +39,29 @@ class LendingController extends Controller
 
     public function show(int $lendingId)
     {
-        $user = Auth::user();
+        $now = Carbon::now();
 
+        $user = Auth::user();
         $lending = $user->lendings()
             ->where('id', $lendingId)
             ->first();
         $lending->book->image_path = Storage::url($lending->book->image_path);
 
-        return view('lendings.show', compact('lending'));
+        return view('lendings.show', compact('lending', 'now'));
+    }
+
+    public function update(Request $request, int $lendingId)
+    {
+        $user = Auth::user();
+        $lending = $user->lendings()
+            ->where('id', $lendingId)
+            ->first();
+
+        $lending->update([
+            'is_returned' => 1,
+        ]);
+
+        return redirect()->route('books.show', ['bookId'=> $lending->book_id]);
+
     }
 }
