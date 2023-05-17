@@ -39,4 +39,19 @@ class LendingController extends Controller
 
         return view('lendings.show', compact('lending'));
     }
+
+    public function update(Request $request, int $lendingId)
+    {
+        $user = Auth::user();
+        $lending = $user->lendings()
+            ->where('id', $lendingId)
+            ->first();
+
+        $lending->update([
+            'is_returned' => 1,
+        ]);
+
+        return redirect()->route('books.show', ['bookId'=> $lending->book_id]);
+
+    }
 }
