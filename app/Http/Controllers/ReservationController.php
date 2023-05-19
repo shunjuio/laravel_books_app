@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ReservationReminder;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Book;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use PhpParser\Builder;
 
@@ -42,11 +40,6 @@ class ReservationController extends Controller
             'start_at' => $request->get('start_at'),
             'end_at'   => $request->get('end_at')
         ]);
-
-        $reservation = $user->reservations()->where('book_id', $bookId)->with('book')->first();
-        $reservation->display_start_at   = Carbon::parse($reservation->start_at)->format('Y-m-d');
-dd($reservation);
-        Mail::to($user)->send(new ReservationReminder($reservation));
 
         return redirect()->route('reservations.index');
     }

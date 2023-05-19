@@ -3,6 +3,8 @@
 namespace App\Mail;
 
 use App\Models\Reservation;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -23,7 +25,9 @@ class ReservationReminder extends Mailable
         protected Reservation $reservation,
     )
     {
-        //
+        $reservation->display_start_at = Carbon::parse($reservation->start_at)->format('Y-m-d');
+        $reservation->display_end_at = Carbon::parse($reservation->end_at)->format('Y-m-d');
+
     }
 
     /**
@@ -48,6 +52,8 @@ class ReservationReminder extends Mailable
             with: [
                 'bookTitle'            => $this->reservation->book->title,
                 'reservationStartDate' => $this->reservation->display_start_at,
+                'reservationEndDate'   => $this->reservation->display_end_at,
+                'userName'             => $this->reservation->user->name,
             ],
         );
     }
