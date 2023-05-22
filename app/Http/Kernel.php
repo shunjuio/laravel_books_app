@@ -25,6 +25,7 @@ class Kernel extends HttpKernel
 
     protected $routeMiddleware = [
         'lendingBook' => \App\Http\Middleware\LendingBookMiddleware::class,
+        'reservationBook' => \App\Http\Middleware\ReservationBookMiddleware::class,
     ];
 
     /**
