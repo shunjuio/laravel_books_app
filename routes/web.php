@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/books', [BookController::class, 'index'])->name('books.index');
-    Route::get('/books/{bookId}', [BookController::class, 'show'])->middleware('lendingBook')->name('books.show');
+    Route::get('/books/{bookId}', [BookController::class, 'show'])->middleware(['lendingBook', 'reservationBook'])->name('books.show');
 
     Route::get('/lendings', [LendingController::class, 'index'])->name('lendings.index');
     Route::post('/lendings', [LendingController::class, 'store'])->name('lendings.store');
