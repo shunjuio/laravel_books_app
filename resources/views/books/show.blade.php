@@ -33,9 +33,9 @@
 <form action="{{ route('reservations.store') }}" method="POST">
   @csrf
   <input name="book_id" type="hidden" value="{{$book->id}}">
-  <input name="start_at" type="date" min="{{\Carbon\Carbon::today()->format('Y-m-d')}}" value="{{\Carbon\Carbon::today()->format('Y-m-d')}}"> から
+  <input name="start_at" type="date" min="{{$book->default_date}}" value="{{$book->default_date}}"> から
   <br>
-  <input name="end_at" type="date" min="{{\Carbon\Carbon::today()->format('Y-m-d')}}"> まで
+  <input name="end_at" type="date" min="{{$book->default_date}}" value="{{$book->default_date}}"> まで
   <br>
   <input type="submit" value="予約する">
 </form>

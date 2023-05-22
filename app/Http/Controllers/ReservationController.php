@@ -34,8 +34,9 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'start_at' =>  'required|date|after_or_equal:today',
-            'end_at' => 'required|date|after:start_at',
+            'book_id'  => 'required',
+            'start_at' => 'required|date|after_or_equal:today',
+            'end_at'   => 'required|date|after_or_equal:start_at',
         ]);
 
         $user   = Auth::user();
