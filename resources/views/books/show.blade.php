@@ -20,12 +20,22 @@
 </form>
 
 <h2>Reservation</h2>
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <form action="{{ route('reservations.store') }}" method="POST">
   @csrf
   <input name="book_id" type="hidden" value="{{$book->id}}">
-  <input name="start_at" type="date"> から
+  <input name="start_at" type="date" min="{{\Carbon\Carbon::today()->format('Y-m-d')}}" value="{{\Carbon\Carbon::today()->format('Y-m-d')}}"> から
   <br>
-  <input name="end_at" type="date"> まで
+  <input name="end_at" type="date" min="{{\Carbon\Carbon::today()->format('Y-m-d')}}"> まで
   <br>
   <input type="submit" value="予約する">
 </form>
