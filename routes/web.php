@@ -50,4 +50,5 @@ Route::middleware(['auth', 'deleteExpiredReservations'])->group(function () {
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::delete('/reservations/{reservationId}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 });
+
 require __DIR__.'/auth.php';
