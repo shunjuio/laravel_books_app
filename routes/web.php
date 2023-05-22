@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/lendings/{lendingId}', [LendingController::class, 'show'])->name('lendings.show');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'deleteExpiredReservations'])->group(function () {
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::get('/reservations/{reservationId}', [ReservationController::class, 'show'])->name('reservations.show');
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
