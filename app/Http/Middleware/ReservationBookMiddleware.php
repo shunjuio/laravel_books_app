@@ -12,20 +12,19 @@ class ReservationBookMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response) $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next) : Response
     {
-        $user = Auth::user();
+        $user   = Auth::user();
         $bookId = $request->route('bookId');
 
         $reservation = $user->reservations()
             ->where('book_id', $bookId)
             ->first();
 
-        if ($reservation)
-        {
-            return redirect()->route('reservations.show',['reservationId' => $reservation->id]);
+        if ($reservation) {
+            return redirect()->route('reservations.show', ['reservationId' => $reservation->id]);
         }
         return $next($request);
     }
