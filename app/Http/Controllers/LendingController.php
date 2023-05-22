@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendLendingRemindMailJob;
+use App\Mail\SendLendingRemindMail;
 use App\Models\Lending;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class LendingController extends Controller
 {
@@ -64,4 +67,10 @@ class LendingController extends Controller
         return redirect()->route('books.show', ['bookId'=> $lending->book_id]);
 
     }
+
+    public function send()
+    {
+
+    }
+
 }

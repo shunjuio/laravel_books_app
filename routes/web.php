@@ -7,6 +7,7 @@ use App\Http\Controllers\LendingController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\AdminBookController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\LendingRemindMailSendController;
 
 
 /*
@@ -50,4 +51,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
     Route::delete('/reservations/{reservationId}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 });
+
 require __DIR__.'/auth.php';
