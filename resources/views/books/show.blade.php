@@ -29,3 +29,13 @@
   <br>
   <input type="submit" value="予約する">
 </form>
+
+
+@if($book->reservations->isEmpty())
+    <p>予約はありません</p>
+@else
+    @foreach($book->reservations as $reservation)
+        <p>{{$reservation->start_at}} - {{$reservation->end_at}} </p>
+    @endforeach
+
+@endif
