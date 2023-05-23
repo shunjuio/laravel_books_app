@@ -15,7 +15,7 @@
         <li class="li" >
             <img src="{{ 'storage/'. $book->image_path}}" style='max-width:300px;max-height:500px'>
             <br>
-            <a href="{{ route('books.show', ['bookId'=> $book->id])}}">{{ $book->title }}
+            <a href="{{ route('books.show', ['bookId'=> $book->id])}}">{{ $book->title }} </a>
         </li>
     @endforeach
 </div>

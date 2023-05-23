@@ -26,23 +26,19 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'deleteExpiredReservations'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
-Route::middleware('auth')->group(function () {
     Route::get('/books', [BookController::class, 'index'])->name('books.index');
-    Route::get('/books/{bookId}', [BookController::class, 'show'])->middleware('lendingBook')->name('books.show');
+    Route::get('/books/{bookId}', [BookController::class, 'show'])->middleware(['lendingBook', 'reservationBook'])->name('books.show');
 
     Route::get('/lendings', [LendingController::class, 'index'])->name('lendings.index');
     Route::post('/lendings', [LendingController::class, 'store'])->name('lendings.store');
     Route::put('/lendings/{lendingId}/return', [LendingController::class, 'update'])->name('lendings.update');
     Route::get('/lendings/{lendingId}', [LendingController::class, 'show'])->name('lendings.show');
-});
 
-Route::middleware('auth')->group(function () {
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::get('/reservations/{reservationId}', [ReservationController::class, 'show'])->name('reservations.show');
     Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');

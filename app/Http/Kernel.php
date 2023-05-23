@@ -25,6 +25,7 @@ class Kernel extends HttpKernel
 
     protected $routeMiddleware = [
         'lendingBook' => \App\Http\Middleware\LendingBookMiddleware::class,
+        'reservationBook' => \App\Http\Middleware\ReservationBookMiddleware::class,
     ];
 
     /**
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'deleteExpiredReservations' => \App\Http\Middleware\DeleteExpiredReservationsMiddleware::class,
     ];
 }
