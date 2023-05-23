@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendLendingRemindMailJob;
+use App\Mail\SendLendingRemindMail;
 use App\Models\Lending;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
 
 class LendingController extends Controller
 {
@@ -26,15 +29,15 @@ class LendingController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $bookId =  $request->get('book_id');
+        $bookId = $request->get('book_id');
 
         $user->lendings()->create([
             'book_id' => $bookId,
             'start_at' => $request->get('start_at'),
-            'end_at' =>$request->get('end_at'),
+            'end_at' => $request->get('end_at'),
         ]);
 
-        return redirect()->route('books.show', ['bookId'=> $bookId]);
+        return redirect()->route('books.show', ['bookId' => $bookId]);
     }
 
     public function show(int $lendingId)
@@ -61,7 +64,9 @@ class LendingController extends Controller
             'is_returned' => 1,
         ]);
 
-        return redirect()->route('books.show', ['bookId'=> $lending->book_id]);
+        return redirect()->route('books.show', ['bookId' => $lending->book_id]);
 
     }
+
 }
+
