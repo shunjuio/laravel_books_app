@@ -22,8 +22,8 @@ class ReservationController extends Controller
 
     public function show(Request $request, $reservationId)
     {
-        $user = Auth::user();
-        $reservation = $user->reservations()->where('id', $reservationId)->with('book')->first();
+        $user                            = Auth::user();
+        $reservation                     = $user->reservations()->where('id', $reservationId)->with('book')->first();
         $reservation->display_image_path = Storage::url($reservation->book->image_path);
         $reservation->display_start_at   = Carbon::parse($reservation->start_at)->format('Y-m-d');
         $reservation->display_end_at     = Carbon::parse($reservation->end_at)->format('Y-m-d');
