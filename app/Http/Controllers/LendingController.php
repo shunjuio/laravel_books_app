@@ -29,15 +29,15 @@ class LendingController extends Controller
     public function store(Request $request)
     {
         $user = Auth::user();
-        $bookId =  $request->get('book_id');
+        $bookId = $request->get('book_id');
 
         $user->lendings()->create([
             'book_id' => $bookId,
             'start_at' => $request->get('start_at'),
-            'end_at' =>$request->get('end_at'),
+            'end_at' => $request->get('end_at'),
         ]);
 
-        return redirect()->route('books.show', ['bookId'=> $bookId]);
+        return redirect()->route('books.show', ['bookId' => $bookId]);
     }
 
     public function show(int $lendingId)
@@ -64,13 +64,9 @@ class LendingController extends Controller
             'is_returned' => 1,
         ]);
 
-        return redirect()->route('books.show', ['bookId'=> $lending->book_id]);
-
-    }
-
-    public function send()
-    {
+        return redirect()->route('books.show', ['bookId' => $lending->book_id]);
 
     }
 
 }
+

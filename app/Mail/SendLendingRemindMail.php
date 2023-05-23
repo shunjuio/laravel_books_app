@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Lending;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Database\Eloquent\Collection;
@@ -33,7 +32,7 @@ class SendLendingRemindMail extends Mailable
 
     /**
      * Get the message envelope.
-//     */
+     * //     */
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -47,7 +46,7 @@ class SendLendingRemindMail extends Mailable
     public function content(): Content
     {
         foreach ($this->lendings as $lending) {
-            $lending->book->image = storage_path('app/public/' . $lending->book->image_path );
+            $lending->book->image = storage_path('app/public/' . $lending->book->image_path);
         }
 
         return new Content(

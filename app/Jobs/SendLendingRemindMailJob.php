@@ -32,7 +32,6 @@ class SendLendingRemindMailJob implements ShouldQueue
      */
     public function handle()
     {
-        Log::debug('$users->nowLendingsは、、、', [$this->user->nowLendings]);
         Mail::to($this->user->email)
             ->send(new SendLendingRemindMail($this->user->nowLendings));
     }

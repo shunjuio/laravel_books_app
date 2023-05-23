@@ -6,7 +6,6 @@ use App\Jobs\SendLendingRemindMailJob;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use App\Models\Lending;
 use Illuminate\Support\Facades\Log;
 
 class SendLendingRemindMailCommand extends Command
@@ -30,15 +29,14 @@ class SendLendingRemindMailCommand extends Command
      */
     public function handle()
     {
-        $remindDate = Carbon::today()->subDay();
-        $users = User::with(['nowLendings' => function($query) use($remindDate) {
+        $remindDate = Carbon::tomorrow();
+        $users = User::with(['nowLendings' => function ($query) use ($remindDate) {
             $query->where('end_at', $remindDate);
         }])->get();
 
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             if ($user->nowLendings->count() > 0)
-            SendLendingRemindMailJob::dispatch($user);
+                SendLendingRemindMailJob::dispatch($user);
         }
     }
 }
