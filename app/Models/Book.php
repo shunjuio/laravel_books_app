@@ -35,6 +35,6 @@ class Book extends Model
 
     public function reservations()
     {
-      return $this->hasMany(Reservation::class)->orderBy('start_at','asc');
+      return $this->hasMany(Reservation::class);
     }
 }
