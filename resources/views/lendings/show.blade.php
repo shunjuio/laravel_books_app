@@ -5,11 +5,11 @@
 <form action="{{route('lendings.update', ['lendingId' =>$lending->id])}}" method="POST">
     @csrf
     @method('PUT')
-    <input type="submit" value="返却する" >
+    <input type="submit" value="返却する">
 </form>
 
-    @if($lending->end_at > $now)
-        <p>{{\Carbon\Carbon::parse($lending->end_at)->format('Y年m月d日')}}　まで借りています</p>
-    @else
-        <p>返却期限過ぎています！！</p>
-    @endif
+@if($lending->end_at < $today)
+    <p>返却期限過ぎています！！</p>
+@else
+    <p>{{\Carbon\Carbon::parse($lending->end_at)->format('Y年m月d日')}} まで借りています</p>
+@endif
