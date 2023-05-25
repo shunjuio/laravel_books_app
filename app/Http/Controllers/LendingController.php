@@ -69,4 +69,3 @@ class LendingController extends Controller
     }
 
 }
-

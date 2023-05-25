@@ -1,3 +1,9 @@
+@vite(['resources/js/form.js'])
+<script>
+    const lendingAction = {{Js::from( route('lendings.store')) }};
+    const reservationsAction = {{Js::from( route('reservations.store')) }};
+</script>
+
 <h3>Title:{{$book->title}}</h3>
 <img src="{{ asset($book->image_path)}}" style='max-width:500px;max-height:500px'>
 <br>
@@ -9,23 +15,11 @@
     <p>貸出可能</p>
 @endif
 
-<form action="{{ route('lendings.store') }}" method="POST">
+<form id="form" method="POST">
     @csrf
     <input name="book_id" type="hidden" value="{{$book->id}}">
-    <input name="start_at" type="date"> から
-    <br>
-    <input name="end_at" type="date"> まで
-    <br>
-    <input type="submit" value="借りる" {{ $isLending ? 'disabled' : '' }}>
-</form>
-
-<h2>Reservation</h2>
-<form action="{{ route('reservations.store') }}" method="POST">
-  @csrf
-  <input name="book_id" type="hidden" value="{{$book->id}}">
-  <input name="start_at" type="date"> から
-  <br>
-  <input name="end_at" type="date"> まで
-  <br>
-  <input type="submit" value="予約する">
+    <input id="input_start_at" name="start_at" type="date" min="{{$book->default_date}}" value="{{$book->default_date}}"> から
+    <input id="input_end_at" name="end_at" type="date" min="{{$book->default_date}}" value="{{$book->default_date}}"> まで
+    <button id="lending_btn" type="button" {{ $isLending ? 'disabled' : '' }}>借りる</button>
+    <button id="reservation_btn" type="button" >予約する</button>
 </form>

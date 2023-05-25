@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use Carbon\Carbon;
 use App\Models\Lending;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,7 +12,7 @@ class BookController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user  = Auth::user();
         $books = Book::all();
 
         //現在借りています(自分が借りている本)
@@ -43,8 +42,9 @@ class BookController extends Controller
 
     public function show(int $bookId)
     {
-        $book = Book::where('id', $bookId)->first();
-        $book->image_path = Storage::url($book->image_path);
+        $book               = Book::where('id', $bookId)->first();
+        $book->image_path   = Storage::url($book->image_path);
+        $book->default_date = Carbon::today()->format('Y-m-d');
 
         $isLending = $book->nowlending ? true : false;
 
