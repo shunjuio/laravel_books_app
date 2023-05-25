@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreReservationRequest;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -31,20 +32,15 @@ class ReservationController extends Controller
         return view('reservations.show', compact('reservation'));
     }
 
-    public function store(Request $request)
+    public function store(StoreReservationRequest $request)
     {
-        $validated = $request->validate([
-            'book_id'  => 'required',
-            'start_at' => 'required|date|after_or_equal:today',
-            'end_at'   => 'required|date|after_or_equal:start_at',
-        ]);
+        $user      = Auth::user();
+        $validated = $request->validated();
 
-        $user   = Auth::user();
-        $bookId = $request->get('book_id');
         $user->reservations()->create([
-            'book_id'  => $bookId,
-            'start_at' => $request->get('start_at'),
-            'end_at'   => $request->get('end_at')
+            'book_id'  => $validated['book_id'],
+            'start_at' => $validated['start_at'],
+            'end_at'   => $validated['end_at'],
         ]);
 
         return redirect()->route('reservations.index');
