@@ -5,8 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LendingController;
 use App\Http\Controllers\ReservationController;
-use App\Http\Controllers\AdminBookController;
-use App\Http\Controllers\AdminUserController;
 
 
 /*
