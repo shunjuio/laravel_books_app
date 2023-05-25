@@ -42,7 +42,7 @@ class LendingController extends Controller
 
     public function show(int $lendingId)
     {
-        $now = Carbon::now();
+        $today = Carbon::today();
 
         $user = Auth::user();
         $lending = $user->lendings()
@@ -50,7 +50,7 @@ class LendingController extends Controller
             ->first();
         $lending->book->image_path = Storage::url($lending->book->image_path);
 
-        return view('lendings.show', compact('lending', 'now'));
+        return view('lendings.show', compact('lending', 'today'));
     }
 
     public function update(Request $request, int $lendingId)
@@ -69,4 +69,3 @@ class LendingController extends Controller
     }
 
 }
-
