@@ -5,13 +5,14 @@ document.addEventListener('DOMContentLoaded', function () {
     lendingSubmit.addEventListener("click", function () {
         const form = document.getElementById('form');
 
-        form.action = lendingSubmit.formAction;
+        form.action = lendingAction;
         form.submit();
     });
 
     reservationSubmit.addEventListener("click", function () {
         const form = document.getElementById('form');
-        form.action = reservationSubmit.formAction;
+
+        form.action = reservationsAction;
         form.submit();
     });
 }, false);
