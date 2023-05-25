@@ -1,21 +1,23 @@
 <style>
-    .book{
+    .book {
         display: flex;
         flex-wrap: wrap;
-        list-style:none;
+        list-style: none;
         justify-content: flex-start;
     }
-    .li{
-        padding : 20px ;
+
+    .li {
+        padding: 20px;
     }
 </style>
 <h3>本一覧</h3>
 <div class="book">
     @foreach($books as $book)
-        <li class="li" >
+        <li class="li">
             <img src="{{ 'storage/'. $book->image_path}}" style='max-width:300px;max-height:500px'>
             <br>
             <a href="{{ route('books.show', ['bookId'=> $book->id])}}">{{ $book->title }} </a>
+            <p>{{ $status[$book->id]}}</p>
         </li>
     @endforeach
 </div>
