@@ -11,24 +11,11 @@
     <p>貸出可能</p>
 @endif
 
-<div>
+<form id="form" method="POST">
+    @csrf
+    <input name="book_id" type="hidden" value="{{$book->id}}">
     <input id="input_start_at" name="start_at" type="date" min="{{$book->default_date}}" value="{{$book->default_date}}"> から
     <input id="input_end_at" name="end_at" type="date" min="{{$book->default_date}}" value="{{$book->default_date}}"> まで
-</div>
-
-<div class="submit_form_box" style="display: flex; margin-top: 15px; column-gap: 15px;">
-    <form action="{{ route('lendings.store') }}" method="POST">
-        @csrf
-        <input name="book_id" type="hidden" value="{{$book->id}}">
-        <input id="lending_start_at" name="start_at" type="hidden">
-        <input id="lending_end_at" name="end_at" type="hidden">
-        <input id="submit_lending" type="submit" value="借りる" {{ $isLending ? 'disabled' : '' }}>
-    </form>
-    <form action="{{ route('reservations.store') }}" method="POST">
-        @csrf
-        <input name="book_id" type="hidden" value="{{$book->id}}">
-        <input id="reservation_start_at" name="start_at" type="hidden">
-        <input id="reservation_end_at" name="end_at" type="hidden">
-        <input id="submit_reservation" type="submit" value="予約する">
-    </form>
-</div>
+    <button id="lending_btn" type="button" formaction="{{ route('lendings.store') }}" {{ $isLending ? 'disabled' : '' }}>借りる</button>
+    <button id="reservation_btn" type="button" formaction="{{ route('reservations.store') }}">予約する</button>
+</form>
