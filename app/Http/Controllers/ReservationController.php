@@ -9,14 +9,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Book;
 use Illuminate\Support\Facades\Storage;
-use PhpParser\Builder;
 
 class ReservationController extends Controller
 {
     public function index()
     {
         $user         = Auth::user();
-        $reservations = $user->reservations()->with('book')->where('user_id', $user->id)->get();
+        $reservations = $user->reservations()->with('book')->get();
 
         return view('reservations.index', compact('user', 'reservations'));
     }
@@ -24,7 +23,7 @@ class ReservationController extends Controller
     public function show(Request $request, $reservationId)
     {
         $user                            = Auth::user();
-        $reservation                     = $user->reservations()->where('id', $reservationId)->with('book')->first();
+        $reservation                     = $user->reservations()->where('id', $reservationId)->with('book')->firstOrFail();
         $reservation->display_image_path = Storage::url($reservation->book->image_path);
         $reservation->display_start_at   = Carbon::parse($reservation->start_at)->format('Y-m-d');
         $reservation->display_end_at     = Carbon::parse($reservation->end_at)->format('Y-m-d');
