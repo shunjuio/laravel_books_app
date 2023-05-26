@@ -11,7 +11,7 @@ class StoreReservationRequest extends FormRequest
      */
     public function authorize() : bool
     {
-        return tru3
+        return true;
     }
 
     /**
