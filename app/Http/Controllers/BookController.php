@@ -44,8 +44,9 @@ class BookController extends Controller
     {
         $book = Book::with([
             'reservations' => function ($query) {
-                $query->orderBy('start_at', 'asc');
-            }
+                $query->orderBy('start_at');
+            },
+            'nowlending',
         ])->find($bookId);
 
         $book->image_path   = Storage::url($book->image_path);
