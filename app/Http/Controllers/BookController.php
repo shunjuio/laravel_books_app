@@ -42,11 +42,21 @@ class BookController extends Controller
 
     public function show(int $bookId)
     {
-        $book               = Book::where('id', $bookId)->first();
+        $book = Book::with([
+            'reservations' => function ($query) {
+                $query->orderBy('start_at');
+            },
+            'nowlending',
+        ])->find($bookId);
+
         $book->image_path   = Storage::url($book->image_path);
         $book->default_date = Carbon::today()->format('Y-m-d');
 
         $isLending = $book->nowlending ? true : false;
+        foreach ($book->reservations as $reservation) {
+            $reservation->display_start_at = Carbon::parse($reservation->start_at)->format('Y-m-d');
+            $reservation->display_end_at   = Carbon::parse($reservation->end_at)->format('Y-m-d');
+        }
 
         return view('books.show', compact('book', 'isLending'));
     }
