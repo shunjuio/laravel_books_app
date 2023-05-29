@@ -36,9 +36,9 @@ class ReservationController extends Controller
         $user      = Auth::user();
 
         $user->reservations()->create([
-            'book_id'  => $request->get('book_id'),
-            'start_at' => $request->get('start_at'),
-            'end_at'   => $request->get('end_at')
+            'book_id'  => $request->book_id,
+            'start_at' => $request->start_at,
+            'end_at'   => $request->end_at,
         ]);
 
         return redirect()->route('reservations.index');

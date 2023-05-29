@@ -26,7 +26,6 @@ class StoreReservationRequest extends FormRequest
             'book_id'  => 'required',
             'start_at' => 'required|date|after_or_equal:today',
             'end_at'   => 'required|date|after_or_equal:start_at|before_or_equal:' . $this->getEndDateLimit(),
-
         ];
     }
 
