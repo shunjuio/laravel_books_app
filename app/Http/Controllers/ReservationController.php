@@ -34,12 +34,11 @@ class ReservationController extends Controller
     public function store(StoreReservationRequest $request)
     {
         $user      = Auth::user();
-        $validated = $request->validated();
 
         $user->reservations()->create([
-            'book_id'  => $validated['book_id'],
-            'start_at' => $validated['start_at'],
-            'end_at'   => $validated['end_at'],
+            'book_id'  => $request->get('book_id'),
+            'start_at' => $request->get('start_at'),
+            'end_at'   => $request->get('end_at')
         ]);
 
         return redirect()->route('reservations.index');

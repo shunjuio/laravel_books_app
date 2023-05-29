@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreReservationRequest extends FormRequest
@@ -29,28 +30,10 @@ class StoreReservationRequest extends FormRequest
         ];
     }
 
-    public function messages() : array
-    {
-        return [
-            'start_at.required'       => ':attributeを選択して下さい。',
-            'start_at.after_or_equal' => ':attributeは本日以降を選択して下さい。',
-            'end_at.after_or_equal'   => ':attributeは開始日以降を選択して下さい。',
-            'end_at.required'         => ':attributeを選択して下さい。',
-            'end_at.before_or_equal'  => '貸出/予約期間は最大7日間です',
-        ];
-    }
-
-    public function attributes() : array
-    {
-        return [
-            'start_at' => '開始日',
-            'end_at'   => '返却日',
-        ];
-    }
-
     private function getEndDateLimit()
     {
         //終了日を開始日から7日以内とするためのメソッド
-        return $this->input('start_at') . ' +7days';
+        $startDate = Carbon::parse($this->input('start_at'));
+        return $startDate->copy()->addDays(7)->format('Y-m-d');
     }
 }
