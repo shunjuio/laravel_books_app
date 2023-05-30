@@ -25,7 +25,7 @@ class LendingRequest extends FormRequest
     {
         return [
             'book_id'  => 'required|integer',
-            'start_at' => 'required|date',
+            'start_at' => 'required|date|after:yesterday',
             'end_at'   => 'required|date|after:start_at',
         ];
     }
@@ -34,6 +34,7 @@ class LendingRequest extends FormRequest
     {
         return [
             'start_at.required' => '貸出開始日は必須です',
+            'start_at.after'    => '貸出開始日は本日以降で入力してください',
             'end_at.required'   => '貸出終了日は必須です',
             'end_at.after'      => '貸出終了日は貸出開始日以降で入力してください'
         ];
