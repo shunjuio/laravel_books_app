@@ -14,26 +14,24 @@
 @else
     <p>貸出可能</p>
 @endif
+@if ($errors->any())
+    <div class="alert alert-danger" style="color:red; background-color: #e9e9e9; ">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 <form id="form" method="POST">
     @csrf
     <input name="book_id" type="hidden" value="{{$book->id}}">
-    <input id="input_start_at" name="start_at" type="date" min="{{$book->default_date}}"
-           value="{{$book->default_date}}"> から
-    <input id="input_end_at" name="end_at" type="date" min="{{$book->default_date}}" value="{{$book->default_date}}"> まで
+    <p><input id="input_start_at" name="start_at" type="date" min="{{$book->default_date}}"> から</p>
+    <p><input id="input_end_at" name="end_at" type="date" min="{{$book->default_date}}" > まで</p>
     <button id="lending_btn" type="button" {{ $isLending ? 'disabled' : '' }}>借りる</button>
-    <button id="reservation_btn" type="button">予約する</button>
+    <button id="reservation_btn" type="button" >予約する</button>
 </form>
-
-<div>
-    @if ($errors->any())
-        <ul>
-            @foreach (array_unique($errors->all()) as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
-</div>
 
 @if($book->reservations->isEmpty())
     <p>予約はありません</p>
