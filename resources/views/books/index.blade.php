@@ -17,6 +17,15 @@
             <img src="{{ 'storage/'. $book->image_path}}" style='max-width:300px;max-height:500px'>
             <br>
             <a href="{{ route('books.show', ['bookId'=> $book->id])}}">{{ $book->title }} </a>
+            <table>
+                <tr>
+                    @foreach($book->tags as $tag)
+                        <td>{{$tag->name}}</td>
+                    @endforeach
+                </tr>
+
+            </table>
+
             <p>{{ $status[$book->id]}}</p>
         </li>
     @endforeach

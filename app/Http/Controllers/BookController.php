@@ -14,7 +14,7 @@ class BookController extends Controller
     public function index()
     {
         $user  = Auth::user();
-        $books = Book::all();
+        $books = Book::with('tags')->get();
 
         //現在借りています(自分が借りている本)
         $lendingBookIdList = $user->nowLendings()->with('book')->pluck('book_id')->all();
@@ -22,6 +22,7 @@ class BookController extends Controller
         //予約しています（自分が予約している本）
         $reservationBookIdList = $user->reservations()->with('book')->pluck('book_id')->all();
 
+        
         //貸出中（他のユーザーが借りている本）
         $otherLendingBookIdList = Lending::where('user_id', '!=', $user->id)->where('is_returned', 0)->with('book')->pluck('book_id')->all();
 
