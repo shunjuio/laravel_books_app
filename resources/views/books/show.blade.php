@@ -18,10 +18,11 @@
 <form id="form" method="POST">
     @csrf
     <input name="book_id" type="hidden" value="{{$book->id}}">
-    <input id="input_start_at" name="start_at" type="date" min="{{$book->default_date}}" value="{{$book->default_date}}"> から
+    <input id="input_start_at" name="start_at" type="date" min="{{$book->default_date}}"
+           value="{{$book->default_date}}"> から
     <input id="input_end_at" name="end_at" type="date" min="{{$book->default_date}}" value="{{$book->default_date}}"> まで
     <button id="lending_btn" type="button" {{ $isLending ? 'disabled' : '' }}>借りる</button>
-    <button id="reservation_btn" type="button" >予約する</button>
+    <button id="reservation_btn" type="button">予約する</button>
 </form>
 
 <div>

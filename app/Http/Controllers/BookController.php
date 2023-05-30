@@ -13,7 +13,7 @@ class BookController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user  = Auth::user();
         $books = Book::all();
 
         //現在借りています(自分が借りている本)
@@ -50,13 +50,13 @@ class BookController extends Controller
             'nowlending',
         ])->find($bookId);
 
-        $book->image_path = Storage::url($book->image_path);
+        $book->image_path   = Storage::url($book->image_path);
         $book->default_date = Carbon::today()->format('Y-m-d');
 
         $isLending = $book->nowlending ? true : false;
         foreach ($book->reservations as $reservation) {
             $reservation->display_start_at = Carbon::parse($reservation->start_at)->format('Y-m-d');
-            $reservation->display_end_at = Carbon::parse($reservation->end_at)->format('Y-m-d');
+            $reservation->display_end_at   = Carbon::parse($reservation->end_at)->format('Y-m-d');
         }
 
         return view('books.show', compact('book', 'isLending'));

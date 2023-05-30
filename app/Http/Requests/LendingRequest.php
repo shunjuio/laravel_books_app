@@ -11,7 +11,7 @@ class LendingRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize() : bool
     {
         return true;
     }
@@ -21,12 +21,12 @@ class LendingRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
-    public function rules(Request $request): array
+    public function rules(Request $request) : array
     {
         return [
-            'book_id' => 'required|integer',
+            'book_id'  => 'required|integer',
             'start_at' => ['required', 'date'],
-            'end_at' => ['required', 'date', 'after:start_at'],
+            'end_at'   => ['required', 'date', 'after:start_at'],
         ];
     }
 
@@ -34,17 +34,17 @@ class LendingRequest extends FormRequest
     {
         return [
             'start_at.required' => '貸出開始日は必須です',
-            'end_at.required' => '貸出終了日は必須です',
-            'end_at.after' => '貸出終了日は貸出開始日以降で入力してください'
+            'end_at.required'   => '貸出終了日は必須です',
+            'end_at.after'      => '貸出終了日は貸出開始日以降で入力してください'
         ];
     }
 
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $bookId = $this->request->get('book_id');
+            $bookId  = $this->request->get('book_id');
             $startAt = $this->request->get('start_at');
-            $endAt = $this->request->get('end_at');
+            $endAt   = $this->request->get('end_at');
 
             $reservation = Reservation::where('book_id', $bookId)
                 ->whereHasReservation($startAt, $endAt)

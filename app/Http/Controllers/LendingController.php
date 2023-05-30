@@ -29,13 +29,13 @@ class LendingController extends Controller
 
     public function store(LendingRequest $request)
     {
-        $user = Auth::user();
+        $user   = Auth::user();
         $bookId = $request->get('book_id');
 
         $user->lendings()->create([
-            'book_id' => $bookId,
+            'book_id'  => $bookId,
             'start_at' => $request->get('start_at'),
-            'end_at' => $request->get('end_at'),
+            'end_at'   => $request->get('end_at'),
         ]);
 
         return redirect()->route('books.show', ['bookId' => $bookId]);
@@ -45,8 +45,8 @@ class LendingController extends Controller
     {
         $today = Carbon::today();
 
-        $user = Auth::user();
-        $lending = $user->lendings()
+        $user                      = Auth::user();
+        $lending                   = $user->lendings()
             ->where('id', $lendingId)
             ->first();
         $lending->book->image_path = Storage::url($lending->book->image_path);
@@ -56,7 +56,7 @@ class LendingController extends Controller
 
     public function update(Request $request, int $lendingId)
     {
-        $user = Auth::user();
+        $user    = Auth::user();
         $lending = $user->lendings()
             ->where('id', $lendingId)
             ->first();
