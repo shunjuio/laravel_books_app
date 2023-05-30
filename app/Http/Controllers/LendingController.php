@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LendingRequest;
 use App\Jobs\SendLendingRemindMailJob;
 use App\Mail\SendLendingRemindMail;
 use App\Models\Lending;
@@ -26,7 +27,7 @@ class LendingController extends Controller
 
     }
 
-    public function store(Request $request)
+    public function store(LendingRequest $request)
     {
         $user = Auth::user();
         $bookId = $request->get('book_id');

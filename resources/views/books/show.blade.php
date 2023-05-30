@@ -24,6 +24,16 @@
     <button id="reservation_btn" type="button" >予約する</button>
 </form>
 
+<div>
+    @if ($errors->any())
+        <ul>
+            @foreach (array_unique($errors->all()) as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    @endif
+</div>
+
 @if($book->reservations->isEmpty())
     <p>予約はありません</p>
 @else

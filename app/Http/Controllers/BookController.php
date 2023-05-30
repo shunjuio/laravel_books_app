@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Reservation;
 use Carbon\Carbon;
 use App\Models\Lending;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,8 @@ class BookController extends Controller
     {
         $user  = Auth::user();
         $books = Book::all();
+//        $reservation = Reservation::whereHasReservation()->get();
+//        dump($reservation);
 
         //現在借りています(自分が借りている本)
         $lendingBookIdList = $user->nowLendings()->with('book')->pluck('book_id')->all();
