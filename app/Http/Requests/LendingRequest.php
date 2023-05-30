@@ -25,8 +25,8 @@ class LendingRequest extends FormRequest
     {
         return [
             'book_id'  => 'required|integer',
-            'start_at' => ['required', 'date'],
-            'end_at'   => ['required', 'date', 'after:start_at'],
+            'start_at' => 'required|date',
+            'end_at'   => 'required|date|after:start_at',
         ];
     }
 

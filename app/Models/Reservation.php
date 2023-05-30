@@ -33,7 +33,7 @@ class Reservation extends Model
         $query->where(function ($q) use ($start, $end) {
             //チェックしたい日付の中から開始の予約がある
             $q->where('start_at', '>=', $start)
-                ->where('start_at', '<', $end);
+                ->where('start_at', '<=', $end);
         })
             ->orWhere(function ($q) use ($start, $end) {
                 //チェックしたい日付の中で終わる予約がある
