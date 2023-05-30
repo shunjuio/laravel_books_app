@@ -37,7 +37,7 @@ class Reservation extends Model
         })
             ->orWhere(function ($q) use ($start, $end) {
                 //チェックしたい日付の中で終わる予約がある
-                $q->where('end_at', '>', $start)
+                $q->where('end_at', '>=', $start)
                     ->where('end_at', '<=', $end);
             })
             ->orWhere(function ($q) use ($start, $end) {

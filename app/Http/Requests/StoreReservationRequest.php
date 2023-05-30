@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Validator;
 
 class StoreReservationRequest extends FormRequest
 {
@@ -34,5 +36,26 @@ class StoreReservationRequest extends FormRequest
         //終了日を開始日から7日以内とするためのメソッド
         $startDate = Carbon::parse($this->input('start_at'));
         return $startDate->copy()->addDays(7)->format('Y-m-d');
+    }
+
+    public function after(): array
+    {
+        $book_id  = $this->request->get('book_id');
+        $start_at = $this->request->get('start_at');
+        $end_at   = $this->request->get('end_at');
+        $isReservationExists = Reservation::where('book_id', $book_id)
+                           ->whereHasReservation($start_at, $end_at)
+                           ->exists();
+
+        return [
+            function (Validator $validator) use($isReservationExists) {
+                if ($isReservationExists) {
+                    $validator->errors()->add(
+                        'date_range',
+                        'すでに予約が入っています。他の日付を選択してください。'
+                    );
+                }
+            }
+        ];
     }
 }
