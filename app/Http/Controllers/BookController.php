@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Reservation;
 use Carbon\Carbon;
 use App\Models\Lending;
 use Illuminate\Support\Facades\Auth;
