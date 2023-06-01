@@ -49,8 +49,9 @@ class BookController extends Controller
         $tag    = Tag::with('books.tags')->where('id', $tagId)->first();
         $books  = $tag->books;
         $status = $this->generateBookStatus($books, $user);
+        $tagCount = count($status);
 
-        return view('books.tags_index', compact('tag', 'books', 'status'));
+        return view('books.tags_index', compact('tag', 'books', 'status','tagCount'));
 
     }
 

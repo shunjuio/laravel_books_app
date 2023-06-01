@@ -10,7 +10,7 @@
         padding: 20px;
     }
 </style>
-<h3>タグ検索結果: {{$tag->name}} 本一覧</h3>
+<h3>タグ検索結果 {{$tagCount}} 件: {{$tag->name}} に関連する本一覧</h3>
 <div class="book">
     @foreach($books as $book)
         <li class="li">
