@@ -10,11 +10,11 @@
         padding: 20px;
     }
 </style>
-<h3>本一覧</h3>
+<h3>タグ検索結果: {{$tag->name}} 本一覧</h3>
 <div class="book">
     @foreach($books as $book)
         <li class="li">
-            <img src="{{ 'storage/'. $book->image_path}}" style='max-width:300px;max-height:500px'>
+            <img src="{{ '/storage/'. $book->image_path}}" style='max-width:300px;max-height:500px'>
             <br>
             Title: <a href="{{ route('books.show', ['bookId'=> $book->id])}}">{{ $book->title }} </a>
             <table>
