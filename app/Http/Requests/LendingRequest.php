@@ -36,7 +36,7 @@ class LendingRequest extends FormRequest
             'start_at.required' => '貸出開始日は必須です',
             'start_at.after'    => '貸出開始日は本日以降で入力してください',
             'end_at.required'   => '貸出終了日は必須です',
-            'end_at.after'      => '貸出終了日は貸出開始日以降で入力してください'
+            'end_at.after'      => '貸出終了日は貸出開始日以降を入力してください'
         ];
     }
 
@@ -47,13 +47,15 @@ class LendingRequest extends FormRequest
             $startAt = $this->request->get('start_at');
             $endAt   = $this->request->get('end_at');
 
-            $reservation = Reservation::where('book_id', $bookId)
-                ->whereHasReservation($startAt, $endAt)
-                ->doesntExist();
-
-            if (!$reservation) {
-                $validator->errors()->add('date_range', 'すでに予約が入っています。他の日付を選択してください。');
+            if (!empty($startAt) && !empty($endAt)) {
+                $reservation = Reservation::where('book_id', $bookId)
+                    ->whereHasReservation($startAt, $endAt)
+                    ->doesntExist();
+                if (!$reservation) {
+                    $validator->errors()->add('date_range', 'すでに予約が入っています。他の日付を選択してください。');
+                }
             }
+
         });
     }
 }
